@@ -34,6 +34,8 @@ public class SearchInputActivity extends AppCompatActivity {
     private Switch input_fsk18;
     private FloatingActionButton button_confirm, button_back;
     private Context context;
+    private MyMovieDatabase database = null;
+    private MovieDAO databaseDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,10 @@ public class SearchInputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         initView();
         context = this;
+
+        // Lädt aktuelle Einstellung aus der Datenbank
+        database = MyMovieDatabase.getSingletonInstance(this);
+        databaseDAO = database.movieDao();
 
         // Führt Suche aus
         button_confirm.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +84,16 @@ public class SearchInputActivity extends AppCompatActivity {
         }
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        int currentYear = Integer.parseInt(dateFormat.format(calendar.getTime()));
+        if (!input_year.getText().toString().equals("")) {
+            movie_year = Integer.parseInt(input_year.getText().toString());
+            if (movie_year < 1900 || movie_year > currentYear) {
+                Toast.makeText(getApplicationContext(), getString(R.string.search_input_time_exception_1) + " " + currentYear + " " + getString(R.string.search_input_time_exception_2), Toast.LENGTH_LONG).show();
+                return;
+            }
+        } else {
+            movie_year = 0;
+        }
         movie_fsk18 = input_fsk18.isChecked();
         MyThread mt = new MyThread();
         mt.start();

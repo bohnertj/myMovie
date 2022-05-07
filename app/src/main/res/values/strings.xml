@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <!--AppName-->
+    <string name="app_name">MyMovie</string>
+    <string name="exception">Exception</string>
+    <!--Button-->
+    <color name="app_button_color">@color/red</color>
+    <!--Search Activity Text-->
+    <string name="hint_name">Titel*</string>
+    <string name="hint_year">Jahr</string>
+    <string name="hint_language">Sprache</string>
+    <string name="hint_fsk">zeige 18+ Filme an</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="title_activity_search_input">SearchInputActivity</string>
+    <string name="title_activity_search_result">SearchResultActivity</string>
+    <string name="title_activity_search_result_details">SearchResultDetailsActivity</string>
+
+    <!-- Strings for exceptions -->
+    <string name="main_activity_popular_exception">Aktuell beliebte Fime derzeit leider nicht verfügbar - keine Internetverbindung möglich</string>
+    <string name="main_activity_top_rated_exception">"Am besten bewertete Fime derzeit leider nicht verfügbar - keine Internetverbindung möglich"</string>
+    <string name="search_input_activity_exception">Die Fime Suche ist derzeit leider nicht verfügbar - keine Internetverbindung möglich</string>
+    <string name="no_movies_found_exception">Es wurden keine Filme gefunden</string>
+    <string name="search_input_activity_no_search_input_exception">Bitte Film Titel angegeben!</string>
+    <string name="search_input_time_exception_1">Es können nur Filme im Zeitraum zwischen 1900 und </string>
+    <string name="search_input_time_exception_2"> gesucht werden</string>
+    <string name="settings_max_search_hits_exception">Fehler! Die maximale Trefferanzahl der Suche muss zwischen 20 und 300 liegen</string>
+    <string name="settings_max_popular_hits_exception">Fehler! Die maximale Trefferanzahl der derzeit beliebten Filme muss zwischen 20 und 300 liegen</string>
+    <string name="settings_max_top_rated_hits_exception">Fehler! Die maximale Trefferanzahl der am besten bewerteten Filme muss zwischen 20 und 300 liegen</string>
+    <string name="settings_no_connection_exception">Es ist derzeit leider nicht möglich die Sprache der Beschreibung zu ändern - keine Internetverbindung möglich</string>
+
+    <!-- Main Activity -->
+    <string name="main_activity_score_title">Meine Favoriten - </string>
+    <string name="main_activity_score_counter">Filme aktuell</string>
+
+    <!-- Popular Movies -->
+    <string name="popular_score_title">Derzeit beliebt</string>
+
+    <!-- Top Rated Movies -->
+    <string name="top_rated_score_title">Am besten bewertet</string>
+
+    <!-- Search Resutls -->
+    <string name="search_resutls_score_title">Eingabe \'</string>
+
+    <!-- Resutls -->
+    <string name="results_counter">Filme gefunden</string>
+
+    <!-- Result Details -->
+    <string name="results_details_release">Erschienen am: </string>
+    <string name="results_details_description">Beschreibung: \n</string>
+
+    <!-- Settings -->
+    <string name="la_de">deutsch</string>
+    <string name="la_en">english</string>
+
+    <!--MyMovie App-->
+    <string-array name="languages">
+        <item>deutsch</item>
+        <item>english</item>
+    </string-array>
+
+    <string-array name="sortItem">
+        <item>Titel</item>
+        <item>Veröffentlichung</item>
+        <item>Bewertung</item>
+    </string-array>
+</resources>

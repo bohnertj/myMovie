@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="abs_1">70dp</dimen>
+    <dimen name="abs_2">120dp</dimen>
+    <dimen name="abs_3">170dp</dimen>
+    <dimen name="abs_4">220dp</dimen>
+</resources>
