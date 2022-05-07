@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,11 +14,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobileapplication.mymovie_10.R;
+import com.mobileapplication.mymovie_10.db.AppSettingsEnity;
+import com.mobileapplication.mymovie_10.db.MovieDAO;
+import com.mobileapplication.mymovie_10.db.MyMovieDatabase;
+import com.mobileapplication.mymovie_10.helpers.ApiService;
+import com.mobileapplication.mymovie_10.helpers.CustomAdapter;
 import com.mobileapplication.mymovie_10.helpers.Dialog;
+import com.mobileapplication.mymovie_10.helpers.Movie;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -34,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-
         initView();
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.sortItem));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -48,53 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        // Wechselt zu den derzeit beliebten Filmen
-        button_popular.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!checkInternetConnection()) {
-                    Dialog.showAlertDialog(context, getString(R.string.app_name), getString(R.string.main_activity_popular_exception));
-                    return;
-                }
-            }
-        });
-
-        // Welcheslt zu am besten bewertet
-        button_top_rated.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!checkInternetConnection()) {
-                    Dialog.showAlertDialog(context, getString(R.string.app_name), getString(R.string.main_activity_top_rated_exception));
-                    return;
-                }
-            }
-        });
-
-        // Wechsel zu den Einstellungen
-        button_settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        // Wendet die aktuelle Sortierung auf- bzw. absteigend an
-        button_sorting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = sortingSpinner.getSelectedItemPosition();
-                if (ascending) {
-                    ascending = false;
-                    button_sorting.setImageResource(R.drawable.ic_sort_up);
-                } else {
-                    ascending = true;
-                    button_sorting.setImageResource(R.drawable.ic_sort_down);
-                }
-            }
-        });
+    }
 
     // initialisiert Elmente der Activity
     private void initView() {
@@ -113,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         button_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!menuIsOpen) {
+                if(!menuIsOpen) {
                     openMenu();
                 } else {
                     closeMenu();
@@ -132,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Animiert Schließung des Menüs
-    private void closeMenu() {
+    private void closeMenu(){
         menuIsOpen = false;
         button_settings.animate().translationYBy(getResources().getDimension(R.dimen.abs_1));
         button_top_rated.animate().translationYBy(getResources().getDimension(R.dimen.abs_2));
@@ -140,18 +103,16 @@ public class MainActivity extends AppCompatActivity {
         button_search.animate().translationYBy(getResources().getDimension(R.dimen.abs_4));
     }
 
+
     // Pürft Internetverbindung
     private boolean checkInternetConnection() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
-    }
-
-    // Ruft API Request für die dezeit beliebten Filme auf
-    protected class NowPopularMoviesThread extends Thread {
-        @Override
-        public void run() {
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            return true;
         }
+        else
+            return false;
     }
 }
 
