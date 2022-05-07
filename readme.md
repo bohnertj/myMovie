@@ -9,8 +9,8 @@
 ## What API did we use?
 We used the REST API the movie db https://www.themoviedb.org/documentation/api. After registration you get an API key, which you have to provide with every request. This is used for authentication. The API is free and offers a lot of possibilities.
 ## What else do we want to expand in the future?
-[ ] You can customize the app language and not only the movie description
-[ ] You can share your watchlist with friends
-[ ] You can also search for series
+- [ ] You can customize the app language and not only the movie description
+- [ ] You can share your watchlist with friends
+- [ ] You can also search for series
 ## How we worked?
 We all worked together as a team and wrote down our tasks in ticket. With the help of Jira, we had the possibility to have all stories in one overview and knew the scope. In a 2-week cycle, we always set ourselves specific tasks to complete. This way we were able to keep the schedule well
