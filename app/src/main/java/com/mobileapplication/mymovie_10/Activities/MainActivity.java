@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 appSettingsEnity.searchType = 2;
                 databaseDAO.updateSetting(appSettingsEnity);
+                NowPopularMoviesThread popularMoviesThread = new NowPopularMoviesThread();
+                popularMoviesThread.start();
             }
         });
 
@@ -204,6 +206,23 @@ public class MainActivity extends AppCompatActivity {
         button_top_rated.animate().translationYBy(getResources().getDimension(R.dimen.abs_2));
         button_popular.animate().translationYBy(getResources().getDimension(R.dimen.abs_3));
         button_search.animate().translationYBy(getResources().getDimension(R.dimen.abs_4));
+    }
+
+    // Ruft API Request für die dezeit beliebten Filme auf
+    protected class NowPopularMoviesThread extends Thread {
+        @Override
+        public void run() {
+            try {
+                Intent intent = new Intent(MainActivity.this, SearchResultActivity.class);
+                String language = appSettingsEnity.settingAppLanguage;
+                intent.putExtra("movies", apiService.getNowPopularMovies(language, appSettingsEnity.settingRegion, appSettingsEnity.maxPopularHits));
+                intent.putExtra("origin", getString(R.string.popular_score_title));
+                intent.putExtra("last_activity", "main");
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e("MyMovie","Exception",e);
+            }
+        }
     }
 
     // Ruft API Request für die am besten bewertetsten Filme auf

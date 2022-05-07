@@ -36,6 +36,7 @@ public class SearchInputActivity extends AppCompatActivity {
     private Context context;
     private MyMovieDatabase database = null;
     private MovieDAO databaseDAO;
+    private AppSettingsEnity appSettingsEnity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,8 @@ public class SearchInputActivity extends AppCompatActivity {
         // Lädt aktuelle Einstellung aus der Datenbank
         database = MyMovieDatabase.getSingletonInstance(this);
         databaseDAO = database.movieDao();
+
+        appSettingsEnity = databaseDAO.getSetting();
 
         // Führt Suche aus
         button_confirm.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +71,9 @@ public class SearchInputActivity extends AppCompatActivity {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                appSettingsEnity.searchType = 1;
+                databaseDAO.updateSetting(appSettingsEnity);
+                appSettingsEnity = databaseDAO.getSetting();
                 Intent intent = new Intent(SearchInputActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -114,8 +120,11 @@ public class SearchInputActivity extends AppCompatActivity {
         public void run() {
             try {
                 ApiService apiService = new ApiService();
+                String language = appSettingsEnity.settingAppLanguage;
                 // API Request wird aufgerufen
+                String[] jsonData = apiService.getMovies(movie_title, movie_year, language, movie_fsk18, appSettingsEnity.maxSearchHits);
                 Intent intent = new Intent(SearchInputActivity.this, SearchResultActivity.class);
+                intent.putExtra("movies", jsonData);
                 intent.putExtra("origin", getString(R.string.search_resutls_score_title) + movie_title + "'");
                 intent.putExtra("last_activity", "search");
                 startActivity(intent);
