@@ -175,15 +175,14 @@ public class SettingsActivity extends AppCompatActivity {
                 ApiService apiService = new ApiService();
                 String language = appSettingsEnity.settingAppLanguage;
 
-                ArrayList<MovieEntity> pufferList = new ArrayList<MovieEntity>();
-                Movie pufferMovie;
+                ArrayList<MovieEntity> bufferList = new ArrayList<MovieEntity>();
+                Movie bufferMovie;
 
                 for (int i = 0; i < favourits.size(); i++) {
-                    pufferMovie = apiService.pareJSON(apiService.getFindMovieById(favourits.get(i).getId(), language));
-                    System.out.println(pufferMovie.getMovie_title());
-                    pufferList.add(pufferMovie.parseInMovieEntity());
+                    bufferMovie = apiService.pareJSON(apiService.getFindMovieById(favourits.get(i).getId(), language));
+                    bufferList.add(bufferMovie.parseInMovieEntity());
                 }
-                databaseDAO.updateFavourites(pufferList);
+                databaseDAO.updateFavourites(bufferList);
                 Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                 startActivity(intent);
             } catch (Exception e) {
