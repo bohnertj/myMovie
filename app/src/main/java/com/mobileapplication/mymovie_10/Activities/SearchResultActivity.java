@@ -152,4 +152,16 @@ public class SearchResultActivity extends AppCompatActivity {
         button_sorting = findViewById(R.id.button_filter_richtung_results);
         sortingSpinner = findViewById(R.id.spinner_filterauswahl_results);
     }
+
+    // Hilfsmethode um Ergebnissanzahl zu begrenzen
+    private ArrayList<Movie> trimSearchResults(int maxSize) {
+        ArrayList<Movie> bufferList = new ArrayList<Movie>();
+        if (searchResults.size() > maxSize) {
+            for (int i = 0; i < maxSize; i++) {
+                bufferList.add(searchResults.get(i));
+            }
+            return bufferList;
+        }
+        return searchResults;
+    }
 }
